@@ -1,0 +1,39 @@
+NAME	=	Account
+CC		=	c++
+CFLAGS	=	-Wall -Wextra -Werror -std=c++98
+
+SRCS =	tests.cpp		\
+		Account.cpp
+
+OBJS = $(SRCS:.cpp=.o)
+
+RESET	= \033[0m
+GREEN	= \033[32m
+RED		= \033[31m
+YELLOW	= \033[33m
+CYAN	= \033[36m
+
+all: $(NAME)
+
+$(NAME): $(OBJS)
+	@echo "$(YELLOW)Compiling in progress...$(RESET)"
+	@$(CC) $(CFLAGS) -o $@ $(OBJS)
+	@echo "$(GREEN)Compilation completed.$(RESET)"
+
+
+%.o: %.cpp
+	@$(CC) $(CFLAGS) -c $<
+
+clean:
+	@echo "$(YELLOW)Removing object files...$(RESET)"
+	@rm -f $(OBJS)
+	@echo "$(GREEN)Object files removed.$(RESET)"
+
+fclean: clean
+	@echo "$(YELLOW)Removing the executable...$(RESET)"
+	@rm -f $(NAME)
+	@echo "$(GREEN)Executable removed.$(RESET)"
+
+re: fclean all
+
+.PHONY: all clean fclean re
